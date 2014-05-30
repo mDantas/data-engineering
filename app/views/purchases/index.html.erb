@@ -1,0 +1,47 @@
+<h1>Listing purchases</h1>
+
+<% if flash[:notice] %>
+
+    <div class="notice"><%= flash[:notice] %></div>
+
+  <% end %>
+
+<table>
+  <thead>
+    <tr>
+      <th>Purchaser name</th>
+      <th>Item description</th>
+      <th>Item price</th>
+      <th>Purchase count</th>
+      <th>Merchant address</th>
+      <th>Merchant name</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @purchases.each do |purchase| %>
+      <tr>
+        <td><%= purchase.purchaser_name %></td>
+        <td><%= purchase.item_description %></td>
+        <td><%= purchase.item_price %></td>
+        <td><%= purchase.purchase_count %></td>
+        <td><%= purchase.merchant_address %></td>
+        <td><%= purchase.merchant_name %></td>
+        <td><%= link_to 'Show', purchase %></td>
+        <td><%= link_to 'Edit', edit_purchase_path(purchase) %></td>
+        <td><%= link_to 'Destroy', purchase, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Purchase', new_purchase_path %>
+<%= form_tag({action: :import}, multipart: true) do %>
+  <%= file_field_tag :file %>
+  <%= submit_tag( "Import" ) %>
+<% end %>
